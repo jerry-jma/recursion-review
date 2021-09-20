@@ -6,5 +6,26 @@
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className
 ) {
-  // your code here
+  // Check document for each element.
+  var elements = [];
+  // Base case is the body element.
+  // if (nodes !== undefined) {
+  //   nodes = document.body;
+  // }
+  // Iterate through the children.
+  var checkChildren = function(child) {
+    //if (_(child.classList).contains(className)) {
+      elements.push(child);
+
+   // }
+    for (var i = 0; i < child.childNodes.length; i++) {
+      //var newChild = child[i];
+      checkChildren(child.childNodes[i]);
+    }
+  };
+  checkChildren(document.body);
+
+  // Return array of matched elements.
+  //console.log(JSON.stringify(elements));
+  return elements;
 };
