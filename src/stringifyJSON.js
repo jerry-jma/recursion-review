@@ -5,31 +5,33 @@
 
 var stringifyJSON = function(obj) {
   // Input Base Case
-  var string = '';
-  var recursiveStringify = function(obj) {
-    if (typeof obj === 'number' || typeof obj === 'boolean' || obj === null) {
-      string += obj;
+  if (typeof obj === 'number' || typeof obj === 'boolean' || obj === null) {
+    return '' + obj;
+  }
+  if (typeof obj === 'string') {
+    return '"' + obj + '"';
+  }
+  if (Array.isArray(obj)) {
+    var result = [];
+    for (var i = 0; i < obj.length; i++) {
+      result.push(stringifyJSON(obj[i]));
     }
-    if (typeof obj === 'string') {
-      string += '"' + obj + '"';
-    }
-    if (Array.isArray(obj)) {
-      string += '[';
-      var result = [];
-      for (var i = 0; i < obj.length; i++) {
-        result.push(recursiveStringify(obj[i]));
+    result = '[' + result.join(',') + ']';
+    return result;
+
+  }
+
+  if (!Array.isArray(obj) && typeof obj === 'object') {
+    var result = [];
+    for (var key in obj) {
+      if (typeof obj[key] !== 'function' && typeof obj[key] !== 'undefined') {
+        result.push('"' + key + '"' + ':' + stringifyJSON(obj[key]));
       }
-      result = result.join(',');
-      string += result;
-      console.log(result);
-      string += ']';
     }
-  };
-  // Iterate over nested objects
-  // Return string
-  recursiveStringify(obj);
-  console.log(string);
-  return string;
+    result = '{' + result.join(',') + '}';
+    return result;
+
+  }
 
 };
 

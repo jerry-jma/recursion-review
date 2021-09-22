@@ -14,10 +14,9 @@ var getElementsByClassName = function(className
   // }
   // Iterate through the children.
   var checkChildren = function(child) {
-    //if (_(child.classList).contains(className)) {
+    if (_.contains(child.classList, className)) {
       elements.push(child);
-
-   // }
+    }
     for (var i = 0; i < child.childNodes.length; i++) {
       //var newChild = child[i];
       checkChildren(child.childNodes[i]);
